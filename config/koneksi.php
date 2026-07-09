@@ -13,11 +13,11 @@ if (session_status() == PHP_SESSION_NONE) {
 define('conn', true);
 
 // Konfigurasi Database (Mendukung Environment Variables dari Railway)
-$host = getenv('MYSQLHOST') ? getenv('MYSQLHOST') : "localhost";
-$user = getenv('MYSQLUSER') ? getenv('MYSQLUSER') : "root";
-$pass = getenv('MYSQLPASSWORD') ? getenv('MYSQLPASSWORD') : "";
-$db   = getenv('MYSQLDATABASE') ? getenv('MYSQLDATABASE') : "db_prediksi_sembako";
-$port = getenv('MYSQLPORT') ? getenv('MYSQLPORT') : 3307; // Port menyesuaikan lingkungan Anda
+$host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?: "localhost";
+$user = $_SERVER['MYSQLUSER'] ?? getenv('MYSQLUSER') ?: "root";
+$pass = $_SERVER['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?: "";
+$db   = $_SERVER['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?: "db_prediksi_sembako";
+$port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?: 3307; // Port menyesuaikan lingkungan Anda
 
 
 // Melakukan koneksi ke database
