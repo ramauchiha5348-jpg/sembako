@@ -1,0 +1,199 @@
+/**
+ * Custom CSS untuk Sistem Prediksi Penjualan Toko Sembako
+ * Tema: Biru, Putih, Modern, Clean Dashboard
+ */
+
+/* Import Outfit Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Custom Palette & Variables */
+:root {
+    --primary-blue: #0f52ba;
+    --light-blue: #e6f0fa;
+    --navy-blue: #0b2265;
+    --accent-blue: #1e88e5;
+    --soft-white: #ffffff;
+    --bg-light: #f8fafc;
+    --border-color: #e2e8f0;
+}
+
+/* Sidebar Custom Styling */
+.main-sidebar {
+    background-color: var(--navy-blue) !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: var(--accent-blue) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 10px rgba(30, 136, 229, 0.4);
+}
+
+.brand-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Login Page Styling */
+.login-page-custom {
+    background: linear-gradient(135deg, #0b2265 0%, #0f52ba 50%, #1e88e5 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-page-custom::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    top: -50px;
+    left: -50px;
+    animation: float-bubble 15s infinite ease-in-out;
+}
+
+.login-page-custom::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -50px;
+    right: -50px;
+    animation: float-bubble 12s infinite ease-in-out reverse;
+}
+
+@keyframes float-bubble {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem 2rem;
+    z-index: 10;
+}
+
+/* Tables & Cards Custom styling */
+.card-modern {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: var(--soft-white);
+    margin-bottom: 1.5rem;
+}
+
+.card-modern-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem 1.5rem;
+}
+
+.card-modern-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--navy-blue);
+    margin-bottom: 0;
+}
+
+.table-modern {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-modern th {
+    background-color: var(--light-blue);
+    color: var(--navy-blue);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+    padding: 12px 16px;
+}
+
+.table-modern td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.table-modern tr:hover td {
+    background-color: #fafbfc;
+}
+
+/* Form Design */
+.form-control-modern {
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control-modern:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+.btn-modern-primary {
+    background-color: var(--primary-blue);
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    color: #fff;
+    transition: all 0.2s;
+}
+
+.btn-modern-primary:hover {
+    background-color: var(--navy-blue);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Micro-animations */
+.hover-scale {
+    transition: transform 0.2s;
+}
+.hover-scale:hover {
+    transform: scale(1.02);
+}
+
+/* Media Print Optimization */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    body {
+        background-color: #fff !important;
+        color: #000 !important;
+        font-size: 12pt;
+    }
+    .print-container {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .table-modern th {
+        background-color: #f0f0f0 !important;
+        color: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
