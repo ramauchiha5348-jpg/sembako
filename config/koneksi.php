@@ -31,6 +31,9 @@ try {
         <h2>Koneksi Database Gagal (Error 500 Terhindari)</h2>
         <p>Aplikasi Anda tidak dapat terhubung ke database. Ini biasanya terjadi di Railway karena <b>Variabel Environment (Environment Variables) dari MySQL belum dihubungkan ke aplikasi web Anda</b>.</p>
         <p><b>Pesan Error Teknis:</b> " . $e->getMessage() . "</p>
+        <hr>
+        <p><b>Host yang dicoba:</b> " . htmlspecialchars($host) . "</p>
+        <p><b>Port yang dicoba:</b> " . htmlspecialchars($port) . "</p>
         </div>");
 }
 
