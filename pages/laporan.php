@@ -76,17 +76,23 @@ $result_produk = mysqli_query($conn, "SELECT id_produk, nama_produk, satuan FROM
                             <input type="date" name="tgl_selesai" class="form-control form-control-modern" value="<?= $tgl_selesai; ?>">
                         </div>
                         <div class="col-md-3">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex flex-column gap-2">
                                 <button type="submit" class="btn btn-modern-primary w-100 py-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-search me-1.5"></i> Filter
+                                    <i class="bi bi-search me-1.5"></i> Filter Data
                                 </button>
-                                <?php if (mysqli_num_rows($result_laporan) > 0): ?>
-                                    <!-- Tombol Export PDF memicu tab baru print layout -->
-                                    <a href="print_laporan.php?id_produk=<?= $id_produk; ?>&tgl_mulai=<?= $tgl_mulai; ?>&tgl_selesai=<?= $tgl_selesai; ?>" 
-                                       target="_blank" 
-                                       class="btn btn-danger w-100 py-2 d-flex align-items-center justify-content-center shadow-sm">
-                                        <i class="bi bi-printer me-1.5"></i> Cetak PDF
-                                    </a>
+                                <?php if (isset($_GET['tgl_mulai']) && mysqli_num_rows($result_laporan) > 0): ?>
+                                    <div class="d-flex gap-2">
+                                        <a href="print_laporan.php?id_produk=<?= $id_produk; ?>&tgl_mulai=<?= $tgl_mulai; ?>&tgl_selesai=<?= $tgl_selesai; ?>" 
+                                           target="_blank" 
+                                           class="btn btn-danger w-50 py-2 d-flex align-items-center justify-content-center shadow-sm">
+                                            <i class="bi bi-file-earmark-pdf me-1.5"></i> PDF
+                                        </a>
+                                        <a href="print_laporan_excel.php?id_produk=<?= $id_produk; ?>&tgl_mulai=<?= $tgl_mulai; ?>&tgl_selesai=<?= $tgl_selesai; ?>" 
+                                           target="_blank" 
+                                           class="btn btn-success w-50 py-2 d-flex align-items-center justify-content-center shadow-sm">
+                                            <i class="bi bi-file-earmark-excel me-1.5"></i> Excel
+                                        </a>
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         </div>
