@@ -1,8 +1,8 @@
 -- Database: db_prediksi_sembako
 -- Dibuat untuk Sistem Prediksi Penjualan Toko Sembako
 
-CREATE DATABASE IF NOT EXISTS `db_prediksi_sembako`;
-USE `db_prediksi_sembako`;
+-- Database disesuaikan dengan environment (bisa 'railway' atau 'db_prediksi_sembako')
+-- CREATE DATABASE dan USE dihapus agar kompatibel dengan Railway
 
 -- 1. Tabel user
 DROP TABLE IF EXISTS `user`;
