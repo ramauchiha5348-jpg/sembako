@@ -21,11 +21,17 @@ $port = getenv('MYSQLPORT') ? getenv('MYSQLPORT') : 3307; // Port menyesuaikan l
 
 
 // Melakukan koneksi ke database
-$conn = mysqli_connect($host, $user, $pass, $db, $port);
-
-// Periksa koneksi
-if (!$conn) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
+try {
+    $conn = mysqli_connect($host, $user, $pass, $db, $port);
+    if (!$conn) {
+        die("Koneksi database gagal: " . mysqli_connect_error());
+    }
+} catch (mysqli_sql_exception $e) {
+    die("<div style='font-family:sans-serif; padding:20px; text-align:center;'>
+        <h2>Koneksi Database Gagal (Error 500 Terhindari)</h2>
+        <p>Aplikasi Anda tidak dapat terhubung ke database. Ini biasanya terjadi di Railway karena <b>Variabel Environment (Environment Variables) dari MySQL belum dihubungkan ke aplikasi web Anda</b>.</p>
+        <p><b>Pesan Error Teknis:</b> " . $e->getMessage() . "</p>
+        </div>");
 }
 
 /**
