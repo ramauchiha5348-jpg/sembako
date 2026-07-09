@@ -7,6 +7,29 @@ if (isset($_SESSION['login'])) {
     header("Location: index.php?page=dashboard");
     exit;
 }
+
+// Autoload composer
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
+$google_auth_url = "#";
+if (class_exists('Google\Client')) {
+    $clientID = $_SERVER['GOOGLE_CLIENT_ID'] ?? getenv('GOOGLE_CLIENT_ID') ?: '';
+    $clientSecret = $_SERVER['GOOGLE_CLIENT_SECRET'] ?? getenv('GOOGLE_CLIENT_SECRET') ?: '';
+    
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? "https://" : "http://";
+    $redirectUri = $protocol . $_SERVER['HTTP_HOST'] . "/google_callback.php";
+
+    $client = new Google\Client();
+    $client->setClientId($clientID);
+    $client->setClientSecret($clientSecret);
+    $client->setRedirectUri($redirectUri);
+    $client->addScope("email");
+    $client->addScope("profile");
+    
+    $google_auth_url = $client->createAuthUrl();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -63,6 +86,16 @@ if (isset($_SESSION['login'])) {
             <button type="submit" name="login" class="btn btn-modern-primary w-100 py-2 shadow-sm d-flex align-items-center justify-content-center">
                 <i class="bi bi-box-arrow-in-right me-2"></i> Masuk ke Dashboard
             </button>
+            
+            <div class="position-relative mt-4 mb-3 text-center">
+                <hr class="text-muted">
+                <span class="position-absolute top-50 start-50 translate-middle px-3 bg-white text-muted fw-bold" style="font-size: 0.85rem;">ATAU</span>
+            </div>
+            
+            <a href="<?= htmlspecialchars($google_auth_url) ?>" class="btn btn-outline-secondary w-100 py-2 d-flex align-items-center justify-content-center" style="border-radius: 8px;">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" class="me-2">
+                <span class="text-dark fw-semibold">Masuk sebagai Pengunjung</span>
+            </a>
         </form>
 
         <div class="text-center mt-4">

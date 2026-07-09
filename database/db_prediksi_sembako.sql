@@ -8,15 +8,20 @@
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_pengguna` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `hak_akses` enum('Admin','Pengunjung') NOT NULL DEFAULT 'Pengunjung',
+  `google_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_user`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Seed user admin (password: admin123)
-INSERT INTO `user` (`id_user`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$e2iGkFgw2CIG.0xpTuObm.7YLtmJTKsDSqRjcuC1gRnIc28uQfbSW');
+INSERT INTO `user` (`id_user`, `nama_pengguna`, `email`, `username`, `password`, `hak_akses`) VALUES
+(1, 'Admin', 'admin', 'admin', '$2y$10$e2iGkFgw2CIG.0xpTuObm.7YLtmJTKsDSqRjcuC1gRnIc28uQfbSW', 'Admin');
 
 -- 2. Tabel produk
 DROP TABLE IF EXISTS `produk`;

@@ -30,9 +30,11 @@ if (isset($_POST['login'])) {
             $_SESSION['login'] = true;
             $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['hak_akses'] = $user['hak_akses'] ?? 'Admin';
+            $_SESSION['nama_pengguna'] = $user['nama_pengguna'] ?? $user['username'];
             
             // Set alert selamat datang
-            set_alert('success', 'Selamat datang kembali, ' . htmlspecialchars($user['username']) . '!');
+            set_alert('success', 'Selamat datang kembali, ' . htmlspecialchars($_SESSION['nama_pengguna']) . '!');
             
             // Redirect ke halaman dashboard
             header("Location: ../index.php?page=dashboard");

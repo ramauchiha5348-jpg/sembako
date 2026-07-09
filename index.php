@@ -14,9 +14,18 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-// Router sederhana
+$hak_akses = $_SESSION['hak_akses'] ?? 'Admin';
+$nama_pengguna = $_SESSION['nama_pengguna'] ?? $_SESSION['username'];
+
+// Router sederhana dengan batasan hak akses
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-$allowed_pages = ['dashboard', 'produk', 'penjualan', 'prediksi', 'laporan'];
+
+// Daftar halaman yang bisa diakses
+if ($hak_akses === 'Admin') {
+    $allowed_pages = ['dashboard', 'produk', 'penjualan', 'prediksi', 'laporan', 'kelola_akun'];
+} else {
+    $allowed_pages = ['dashboard', 'produk', 'prediksi'];
+}
 
 // Mengatur title dinamis
 $page_titles = [
@@ -24,7 +33,8 @@ $page_titles = [
     'produk' => 'Kelola Data Produk',
     'penjualan' => 'Kelola Data Penjualan',
     'prediksi' => 'Prediksi Penjualan Moving Average',
-    'laporan' => 'Laporan Penjualan Produk'
+    'laporan' => 'Laporan Penjualan Produk',
+    'kelola_akun' => 'Manajemen Akun'
 ];
 $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
 ?>
@@ -71,7 +81,10 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
                             <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2 shadow-sm" style="width: 32px; height: 32px;">
                                 <i class="bi bi-person"></i>
                             </div>
-                            <span class="d-none d-md-inline fw-semibold text-dark"><?= htmlspecialchars($_SESSION['username']); ?></span>
+                            <div class="d-none d-md-block text-start lh-1">
+                                <span class="fw-semibold text-dark d-block"><?= htmlspecialchars($nama_pengguna); ?></span>
+                                <small class="badge bg-<?= $hak_akses == 'Admin' ? 'primary' : 'secondary'; ?> mt-1" style="font-size: 0.65rem;"><?= strtoupper($hak_akses); ?></small>
+                            </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li>
@@ -119,6 +132,7 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
                             </a>
                         </li>
 
+                        <?php if ($hak_akses === 'Admin'): ?>
                         <!-- Data Penjualan -->
                         <li class="nav-item">
                             <a href="index.php?page=penjualan" class="nav-link <?= $page == 'penjualan' ? 'active' : ''; ?>">
@@ -126,6 +140,7 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
                                 <p>Data Penjualan</p>
                             </a>
                         </li>
+                        <?php endif; ?>
 
                         <!-- Header Analisis & Prediksi -->
                         <li class="nav-header text-uppercase text-muted small fw-bold px-3 mt-3 mb-1">Analisis</li>
@@ -134,10 +149,11 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
                         <li class="nav-item">
                             <a href="index.php?page=prediksi" class="nav-link <?= $page == 'prediksi' ? 'active' : ''; ?>">
                                 <i class="nav-icon bi bi-graph-up-arrow me-2"></i>
-                                <p>Prediksi Moving Average</p>
+                                <p>Prediksi SMA</p>
                             </a>
                         </li>
 
+                        <?php if ($hak_akses === 'Admin'): ?>
                         <!-- Laporan -->
                         <li class="nav-item">
                             <a href="index.php?page=laporan" class="nav-link <?= $page == 'laporan' ? 'active' : ''; ?>">
@@ -146,8 +162,20 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
                             </a>
                         </li>
                         
+                        <!-- Header Pengaturan -->
+                        <li class="nav-header text-uppercase text-muted small fw-bold px-3 mt-3 mb-1">Pengaturan</li>
+
+                        <!-- Kelola Akun -->
+                        <li class="nav-item">
+                            <a href="index.php?page=kelola_akun" class="nav-link <?= $page == 'kelola_akun' ? 'active bg-primary text-white' : ''; ?>">
+                                <i class="nav-icon bi bi-people-fill me-2"></i>
+                                <p>Kelola Akun</p>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        
                         <!-- Divider -->
-                        <li class="border-top my-3 border-secondary mx-3"></li>
+                        <li class="nav-header text-uppercase text-muted small fw-bold px-3 mt-3 mb-1">Akses</li>
 
                         <!-- Logout -->
                         <li class="nav-item">
