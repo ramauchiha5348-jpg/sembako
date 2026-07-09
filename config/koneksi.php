@@ -21,7 +21,7 @@ if ($db_url) {
     $host = trim($url_parts['host']);
     $user = trim($url_parts['user']);
     $pass = trim($url_parts['pass'] ?? '');
-    $db   = trim(ltrim($url_parts['path'], '/'));
+    $db   = rtrim(trim(ltrim($url_parts['path'], '/')), "_ ");
     $port = trim($url_parts['port'] ?? 3306);
 } else {
     // Fallback jika tidak ada URL (misal: localhost atau variabel terpisah)
