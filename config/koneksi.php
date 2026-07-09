@@ -13,11 +13,24 @@ if (session_status() == PHP_SESSION_NONE) {
 define('conn', true);
 
 // Konfigurasi Database (Mendukung Environment Variables dari Railway)
-$host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?: "localhost";
-$user = $_SERVER['MYSQLUSER'] ?? getenv('MYSQLUSER') ?: "root";
-$pass = $_SERVER['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?: "";
-$db   = $_SERVER['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?: "db_prediksi_sembako";
-$port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?: 3307; // Port menyesuaikan lingkungan Anda
+$db_url = $_SERVER['MYSQL_URL'] ?? $_SERVER['DATABASE_URL'] ?? $_SERVER['MYSQL_PUBLIC_URL'] ?? getenv('MYSQL_URL') ?? getenv('DATABASE_URL') ?? getenv('MYSQL_PUBLIC_URL');
+
+if ($db_url) {
+    // Parse URL seperti mysql://user:pass@host:port/dbname
+    $url_parts = parse_url($db_url);
+    $host = $url_parts['host'];
+    $user = $url_parts['user'];
+    $pass = $url_parts['pass'] ?? '';
+    $db   = ltrim($url_parts['path'], '/');
+    $port = $url_parts['port'] ?? 3306;
+} else {
+    // Fallback jika tidak ada URL (misal: localhost atau variabel terpisah)
+    $host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?: "localhost";
+    $user = $_SERVER['MYSQLUSER'] ?? getenv('MYSQLUSER') ?: "root";
+    $pass = $_SERVER['MYSQLPASSWORD'] ?? getenv('MYSQLPASSWORD') ?: "";
+    $db   = $_SERVER['MYSQLDATABASE'] ?? getenv('MYSQLDATABASE') ?: "db_prediksi_sembako";
+    $port = $_SERVER['MYSQLPORT'] ?? getenv('MYSQLPORT') ?: 3307;
+}
 
 
 // Melakukan koneksi ke database
