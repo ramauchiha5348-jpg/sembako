@@ -237,7 +237,9 @@ if ($hitung && $selected_produk_id > 0) {
                                 <th>Nama Produk</th>
                                 <th class="text-center">Periode Target</th>
                                 <th class="text-center">Hasil Prediksi</th>
+                                <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <th style="width: 100px;" class="text-center">Aksi</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -260,11 +262,13 @@ if ($hitung && $selected_produk_id > 0) {
                                 </td>
                                 <td class="text-center fw-medium"><?= bulan_indo($row_s['periode']); ?></td>
                                 <td class="text-center text-success fw-bold"><?= number_format($row_s['hasil_prediksi'], 2, ',', '.'); ?></td>
+                                <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <td class="text-center">
                                     <a href="proses/proses_prediksi.php?action=delete&id=<?= $row_s['id_prediksi']; ?>" class="btn btn-outline-danger btn-sm px-2 py-1 rounded" onclick="return konfirmasiHapus('Apakah Anda yakin ingin menghapus data prediksi ini?')">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                             <?php 
                                 endwhile;

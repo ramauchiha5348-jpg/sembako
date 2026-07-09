@@ -54,6 +54,13 @@ if (isset($_POST['simpan_prediksi'])) {
 else if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     $id_prediksi = intval($_GET['id']);
     
+    // Validasi Hak Akses
+    if ($_SESSION['hak_akses'] != 'Admin') {
+        set_alert('danger', 'Akses ditolak! Anda tidak memiliki izin untuk menghapus prediksi.');
+        header("Location: ../index.php?page=prediksi");
+        exit;
+    }
+    
     if ($id_prediksi <= 0) {
         set_alert('danger', 'ID Prediksi tidak valid!');
         header("Location: ../index.php?page=prediksi");
