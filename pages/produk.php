@@ -17,10 +17,12 @@ $result = mysqli_query($conn, $query);
         <div class="card card-modern">
             <div class="card-modern-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="card-modern-title"><i class="bi bi-box-seam me-2 text-primary"></i>Daftar Produk Sembako</h5>
-                <!-- Tombol tambah produk memicu modal -->
+                <!-- Tombol tambah produk memicu modal (Hanya Admin) -->
+                <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                 <button type="button" class="btn btn-modern-primary btn-sm d-flex align-items-center shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
                     <i class="bi bi-plus-lg me-1"></i> Tambah Produk
                 </button>
+                <?php endif; ?>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -31,7 +33,9 @@ $result = mysqli_query($conn, $query);
                                 <th>Nama Produk</th>
                                 <th>Satuan</th>
                                 <th>Harga</th>
+                                <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <th style="width: 180px;" class="text-center">Aksi</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,6 +49,7 @@ $result = mysqli_query($conn, $query);
                                 <td class="fw-semibold text-dark"><?= htmlspecialchars($row['nama_produk']); ?></td>
                                 <td><span class="badge bg-light text-dark border px-2 py-1.5"><?= htmlspecialchars($row['satuan']); ?></span></td>
                                 <td class="text-primary fw-medium"><?= format_rupiah($row['harga']); ?></td>
+                                <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <td class="text-center">
                                     <div class="btn-group gap-1">
                                         <!-- Tombol Edit memicu modal edit spesifik ID -->
@@ -89,7 +94,7 @@ $result = mysqli_query($conn, $query);
                                                 </div>
                                             </div>
                                             <div class="modal-footer border-top-0 px-4 pb-4">
-                                                <button type="button" class="btn btn-light rounded px-3" data-bs-toggle="modal" data-bs-target="#modalEdit-<?= $row['id_produk']; ?>">Batal</button>
+                                                <button type="button" class="btn btn-light rounded px-3" data-bs-dismiss="modal">Batal</button>
                                                 <button type="submit" name="edit_produk" class="btn btn-modern-primary rounded px-4">Simpan Perubahan</button>
                                             </div>
                                         </form>
@@ -97,6 +102,9 @@ $result = mysqli_query($conn, $query);
                                 </div>
                             </div>
                             <!-- Akhir Modal Edit -->
+                            <?php else: ?>
+                            </tr>
+                            <?php endif; ?>
 
                             <?php 
                                 endwhile; 
@@ -116,6 +124,7 @@ $result = mysqli_query($conn, $query);
     </div>
 </div>
 
+<?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
 <!-- Modal Tambah Produk -->
 <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -153,3 +162,4 @@ $result = mysqli_query($conn, $query);
     </div>
 </div>
 <!-- Akhir Modal Tambah -->
+<?php endif; ?>
