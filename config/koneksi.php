@@ -18,11 +18,11 @@ $db_url = $_SERVER['MYSQL_URL'] ?? $_SERVER['DATABASE_URL'] ?? $_SERVER['MYSQL_P
 if ($db_url) {
     // Parse URL seperti mysql://user:pass@host:port/dbname
     $url_parts = parse_url($db_url);
-    $host = $url_parts['host'];
-    $user = $url_parts['user'];
-    $pass = $url_parts['pass'] ?? '';
-    $db   = ltrim($url_parts['path'], '/');
-    $port = $url_parts['port'] ?? 3306;
+    $host = trim($url_parts['host']);
+    $user = trim($url_parts['user']);
+    $pass = trim($url_parts['pass'] ?? '');
+    $db   = trim(ltrim($url_parts['path'], '/'));
+    $port = trim($url_parts['port'] ?? 3306);
 } else {
     // Fallback jika tidak ada URL (misal: localhost atau variabel terpisah)
     $host = $_SERVER['MYSQLHOST'] ?? getenv('MYSQLHOST') ?: "localhost";
