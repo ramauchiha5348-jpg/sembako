@@ -214,8 +214,13 @@ $result_laporan = mysqli_query($conn, $query_laporan);
             <div class="signature-container">
                 <p>PBW, <?= tanggal_indo(date('Y-m-d')); ?></p>
                 <p class="fw-bold">Administrator Toko,</p>
-                <div class="signature-space"></div>
-                <p class="fw-bold" style="text-decoration: underline; margin-bottom: 0;"><?= htmlspecialchars($_SESSION['username']); ?></p>
+                <div class="signature-space" style="position: relative; height: 120px; display: flex; justify-content: center; align-items: center;">
+                    <!-- Stempel (Diatur agak ke kiri dan overlap) -->
+                    <img src="assets/img/stempel.png" alt="Stempel" style="position: absolute; left: 10px; top: -10px; width: 110px; opacity: 0.85; mix-blend-mode: multiply; z-index: 1;">
+                    <!-- Tanda Tangan (Diatur agak ke kanan menimpa stempel) -->
+                    <img src="assets/img/ttd.png" alt="Tanda Tangan" style="position: absolute; right: 20px; top: 10px; width: 140px; mix-blend-mode: multiply; z-index: 2;">
+                </div>
+                <p class="fw-bold" style="text-decoration: underline; margin-bottom: 0; position: relative; z-index: 3;"><?= htmlspecialchars($_SESSION['username']); ?></p>
                 <small class="text-muted">Staff Toko Sembako</small>
             </div>
         </div>
