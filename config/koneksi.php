@@ -42,7 +42,9 @@ try {
     }
 
     // Coba pilih database
-    if (!mysqli_select_db($conn, $db)) {
+    try {
+        mysqli_select_db($conn, $db);
+    } catch (mysqli_sql_exception $e) {
         // Jika gagal, cari tahu database apa saja yang tersedia
         $res = mysqli_query($conn, "SHOW DATABASES");
         $available_dbs = [];
