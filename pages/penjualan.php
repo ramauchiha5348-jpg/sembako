@@ -8,7 +8,8 @@ if (!defined('conn')) {
 }
 
 // Ambil semua data penjualan beserta relasi nama produk
-$query_sales = "SELECT p.*, pr.nama_produk, pr.satuan, pr.harga 
+// Ambil semua data penjualan beserta relasi nama produk
+$query_sales = "SELECT p.*, pr.nama_produk, pr.satuan, pr.harga, pr.stok 
                 FROM penjualan p 
                 JOIN produk pr ON p.id_produk = pr.id_produk 
                 ORDER BY p.tanggal DESC";
@@ -43,6 +44,7 @@ while ($p = mysqli_fetch_assoc($result_produk)) {
                                 <th>Produk</th>
                                 <th class="text-center">Tanggal Penjualan</th>
                                 <th class="text-center">Jumlah Terjual</th>
+                                <th class="text-center">Sisa Stok</th>
                                 <th class="text-end">Total Nilai</th>
                                 <th style="width: 180px;" class="text-center">Aksi</th>
                             </tr>
@@ -62,6 +64,7 @@ while ($p = mysqli_fetch_assoc($result_produk)) {
                                 </td>
                                 <td class="text-center"><?= tanggal_indo($row['tanggal']); ?></td>
                                 <td class="text-center fw-medium"><?= number_format($row['jumlah_terjual'], 0, ',', '.'); ?></td>
+                                <td class="text-center"><span class="badge bg-info text-white px-2 py-1.5"><?= $row['stok']; ?></span></td>
                                 <td class="text-end text-success fw-semibold"><?= format_rupiah($total_nilai); ?></td>
                                 <td class="text-center">
                                     <div class="btn-group gap-1">
@@ -127,7 +130,7 @@ while ($p = mysqli_fetch_assoc($result_produk)) {
                             else: 
                             ?>
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">
+                                <td colspan="7" class="text-center py-4 text-muted">
                                     <i class="bi bi-folder-x fs-2 d-block mb-2"></i> Belum ada data penjualan tersedia.
                                 </td>
                             </tr>

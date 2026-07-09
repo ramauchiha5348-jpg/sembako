@@ -47,7 +47,14 @@ try {
 } catch (Exception $e) {
     echo "Gagal memperbarui admin: " . $e->getMessage() . "<br>";
 }
-
+// 6. Tambah kolom stok pada tabel produk
+try {
+    $q6 = "ALTER TABLE `produk` ADD COLUMN `stok` INT(11) NOT NULL DEFAULT 0 AFTER `satuan`";
+    mysqli_query($conn, $q6);
+    echo "Kolom stok berhasil ditambahkan ke tabel produk.<br>";
+} catch (Exception $e) {
+    echo "Gagal/Sudah ada (stok di produk): " . $e->getMessage() . "<br>";
+}
 echo "<h3>Migrasi Selesai!</h3>";
 echo "<a href='index.php'>Kembali ke Beranda</a>";
 ?>

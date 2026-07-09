@@ -256,6 +256,8 @@ $title = isset($page_titles[$page]) ? $page_titles[$page] : 'Sistem Prediksi';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE 4 JS -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-beta3/dist/js/adminlte.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom JS -->
     <script src="assets/js/custom.js"></script>
 </body>

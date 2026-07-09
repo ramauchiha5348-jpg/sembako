@@ -14,17 +14,18 @@ if (!isset($_SESSION['login'])) {
 if (isset($_POST['tambah_produk'])) {
     $nama_produk = mysqli_real_escape_string($conn, trim($_POST['nama_produk']));
     $satuan = mysqli_real_escape_string($conn, trim($_POST['satuan']));
+    $stok = intval($_POST['stok']);
     $harga = intval($_POST['harga']);
     
     // Validasi input
-    if (empty($nama_produk) || empty($satuan) || $harga <= 0) {
+    if (empty($nama_produk) || empty($satuan) || $harga <= 0 || $stok < 0) {
         set_alert('danger', 'Semua data produk wajib diisi dengan benar!');
         header("Location: ../index.php?page=produk");
         exit;
     }
     
     // Query Insert
-    $query = "INSERT INTO produk (nama_produk, satuan, harga) VALUES ('$nama_produk', '$satuan', $harga)";
+    $query = "INSERT INTO produk (nama_produk, satuan, stok, harga) VALUES ('$nama_produk', '$satuan', $stok, $harga)";
     if (mysqli_query($conn, $query)) {
         set_alert('success', 'Produk baru berhasil ditambahkan!');
     } else {
@@ -39,17 +40,18 @@ else if (isset($_POST['edit_produk'])) {
     $id_produk = intval($_POST['id_produk']);
     $nama_produk = mysqli_real_escape_string($conn, trim($_POST['nama_produk']));
     $satuan = mysqli_real_escape_string($conn, trim($_POST['satuan']));
+    $stok = intval($_POST['stok']);
     $harga = intval($_POST['harga']);
     
     // Validasi input
-    if ($id_produk <= 0 || empty($nama_produk) || empty($satuan) || $harga <= 0) {
+    if ($id_produk <= 0 || empty($nama_produk) || empty($satuan) || $harga <= 0 || $stok < 0) {
         set_alert('danger', 'Semua data produk wajib diisi dengan benar!');
         header("Location: ../index.php?page=produk");
         exit;
     }
     
     // Query Update
-    $query = "UPDATE produk SET nama_produk = '$nama_produk', satuan = '$satuan', harga = $harga WHERE id_produk = $id_produk";
+    $query = "UPDATE produk SET nama_produk = '$nama_produk', satuan = '$satuan', stok = $stok, harga = $harga WHERE id_produk = $id_produk";
     if (mysqli_query($conn, $query)) {
         set_alert('success', 'Data produk berhasil diperbarui!');
     } else {

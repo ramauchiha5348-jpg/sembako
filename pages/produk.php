@@ -32,6 +32,7 @@ $result = mysqli_query($conn, $query);
                                 <th style="width: 80px;" class="text-center">No</th>
                                 <th>Nama Produk</th>
                                 <th>Satuan</th>
+                                <th class="text-center">Stok</th>
                                 <th>Harga</th>
                                 <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <th style="width: 180px;" class="text-center">Aksi</th>
@@ -48,6 +49,7 @@ $result = mysqli_query($conn, $query);
                                 <td class="text-center"><?= $no++; ?></td>
                                 <td class="fw-semibold text-dark"><?= htmlspecialchars($row['nama_produk']); ?></td>
                                 <td><span class="badge bg-light text-dark border px-2 py-1.5"><?= htmlspecialchars($row['satuan']); ?></span></td>
+                                <td class="text-center"><span class="badge bg-info text-white px-2 py-1.5"><?= $row['stok']; ?></span></td>
                                 <td class="text-primary fw-medium"><?= format_rupiah($row['harga']); ?></td>
                                 <?php if ($_SESSION['hak_akses'] == 'Admin'): ?>
                                 <td class="text-center">
@@ -85,6 +87,12 @@ $result = mysqli_query($conn, $query);
                                                     <label class="form-label fw-semibold text-dark">Satuan</label>
                                                     <input type="text" name="satuan" class="form-control form-control-modern" value="<?= htmlspecialchars($row['satuan']); ?>" placeholder="Contoh: Pouch, Kg, Karung" required>
                                                     <div class="invalid-feedback">Satuan wajib diisi!</div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold text-dark">Stok</label>
+                                                    <input type="number" name="stok" class="form-control form-control-modern" value="<?= $row['stok']; ?>" placeholder="Contoh: 100" min="0" required>
+                                                    <div class="invalid-feedback">Stok wajib diisi dengan angka (minimal 0)!</div>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -145,6 +153,12 @@ $result = mysqli_query($conn, $query);
                         <label class="form-label fw-semibold text-dark">Satuan</label>
                         <input type="text" name="satuan" class="form-control form-control-modern" placeholder="Contoh: Pouch, Kg, Karung, Dus" required>
                         <div class="invalid-feedback">Satuan wajib diisi!</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-dark">Stok Awal</label>
+                        <input type="number" name="stok" class="form-control form-control-modern" placeholder="Contoh: 50" min="0" required>
+                        <div class="invalid-feedback">Stok wajib diisi dengan angka (minimal 0)!</div>
                     </div>
 
                     <div class="mb-3">

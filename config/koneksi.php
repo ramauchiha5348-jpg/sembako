@@ -138,12 +138,33 @@ function tampilkan_alert() {
         $type = $alert['type']; // success, danger, warning, info
         $message = $alert['message'];
         
-        echo "
-        <div class='alert alert-{$type} alert-dismissible fade show' role='alert'>
-            <i class='bi " . ($type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill') . " me-2'></i>
-            {$message}
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-        </div>";
+        if ($type == 'error_stok') {
+            $data = json_decode($message, true);
+            echo "
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Menyimpan Data!',
+                        html: 'Gagal! Stok <b>{$data['nama_produk']}</b> tidak mencukupi. Sisa stok saat ini: <b>{$data['stok']}</b>',
+                        confirmButtonText: 'Kembali',
+                        confirmButtonColor: '#dc3545'
+                    });
+                } else {
+                    alert('Gagal! Stok {$data['nama_produk']} tidak mencukupi. Sisa stok: {$data['stok']}');
+                }
+            });
+            </script>
+            ";
+        } else {
+            echo "
+            <div class='alert alert-{$type} alert-dismissible fade show' role='alert'>
+                <i class='bi " . ($type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill') . " me-2'></i>
+                {$message}
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            </div>";
+        }
         
         // Hapus alert setelah ditampilkan
         unset($_SESSION['alert']);

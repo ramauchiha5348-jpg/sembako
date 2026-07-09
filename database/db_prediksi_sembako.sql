@@ -29,17 +29,18 @@ CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL AUTO_INCREMENT,
   `nama_produk` varchar(100) NOT NULL,
   `satuan` varchar(30) NOT NULL,
+  `stok` int(11) NOT NULL DEFAULT 0,
   `harga` int(11) NOT NULL,
   PRIMARY KEY (`id_produk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Seed data produk
-INSERT INTO `produk` (`id_produk`, `nama_produk`, `satuan`, `harga`) VALUES
-(1, 'Beras Premium', 'Karung 10kg', 145000),
-(2, 'Minyak Goreng Bimoli 2L', 'Pouch', 38000),
-(3, 'Gula Pasir Gulaku 1kg', 'Pouch', 17500),
-(4, 'Telur Ayam Ras', 'Peti 10kg', 270000),
-(5, 'Mie Instan Indomie Goreng', 'Dus', 118000);
+INSERT INTO `produk` (`id_produk`, `nama_produk`, `satuan`, `stok`, `harga`) VALUES
+(1, 'Beras Premium', 'Karung 10kg', 50, 145000),
+(2, 'Minyak Goreng Bimoli 2L', 'Pouch', 100, 38000),
+(3, 'Gula Pasir Gulaku 1kg', 'Pouch', 200, 17500),
+(4, 'Telur Ayam Ras', 'Peti 10kg', 30, 270000),
+(5, 'Mie Instan Indomie Goreng', 'Dus', 248, 118000);
 
 -- 3. Tabel penjualan
 DROP TABLE IF EXISTS `penjualan`;
