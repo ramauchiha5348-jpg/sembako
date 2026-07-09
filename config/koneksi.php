@@ -35,9 +35,25 @@ if ($db_url) {
 
 // Melakukan koneksi ke database
 try {
-    $conn = mysqli_connect($host, $user, $pass, $db, $port);
+    // Konek tanpa nama database dulu untuk mengecek
+    $conn = mysqli_connect($host, $user, $pass, '', $port);
     if (!$conn) {
-        die("Koneksi database gagal: " . mysqli_connect_error());
+        throw new mysqli_sql_exception("Gagal koneksi server: " . mysqli_connect_error());
+    }
+
+    // Coba pilih database
+    if (!mysqli_select_db($conn, $db)) {
+        // Jika gagal, cari tahu database apa saja yang tersedia
+        $res = mysqli_query($conn, "SHOW DATABASES");
+        $available_dbs = [];
+        while ($row = mysqli_fetch_array($res)) {
+            if (!in_array($row[0], ['information_schema', 'mysql', 'performance_schema', 'sys'])) {
+                $available_dbs[] = $row[0];
+            }
+        }
+        $db_list = implode(", ", $available_dbs);
+        
+        throw new mysqli_sql_exception("Database '" . $db . "' tidak ditemukan. Database yang tersedia di server ini: " . $db_list);
     }
 } catch (mysqli_sql_exception $e) {
     die("<div style='font-family:sans-serif; padding:20px; text-align:center;'>
@@ -47,6 +63,7 @@ try {
         <hr>
         <p><b>Host yang dicoba:</b> " . htmlspecialchars($host) . "</p>
         <p><b>Port yang dicoba:</b> " . htmlspecialchars($port) . "</p>
+        <p><b>Database yang dicoba:</b> '" . htmlspecialchars($db) . "'</p>
         </div>");
 }
 
