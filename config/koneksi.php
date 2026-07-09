@@ -12,12 +12,13 @@ if (session_status() == PHP_SESSION_NONE) {
 // Definisikan konstanta keamanan agar sub-halaman dapat diakses
 define('conn', true);
 
-// Konfigurasi Database
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "db_prediksi_sembako";
-$port = 3307; // Port menyesuaikan XAMPP Anda
+// Konfigurasi Database (Mendukung Environment Variables dari Railway)
+$host = getenv('MYSQLHOST') ? getenv('MYSQLHOST') : "localhost";
+$user = getenv('MYSQLUSER') ? getenv('MYSQLUSER') : "root";
+$pass = getenv('MYSQLPASSWORD') ? getenv('MYSQLPASSWORD') : "";
+$db   = getenv('MYSQLDATABASE') ? getenv('MYSQLDATABASE') : "db_prediksi_sembako";
+$port = getenv('MYSQLPORT') ? getenv('MYSQLPORT') : 3307; // Port menyesuaikan lingkungan Anda
+
 
 // Melakukan koneksi ke database
 $conn = mysqli_connect($host, $user, $pass, $db, $port);
